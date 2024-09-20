@@ -73,7 +73,7 @@ class WiderFaceDetection(data.Dataset):
         target = np.array(annotations)
         if self.preproc is not None:
             img, target = self.preproc(img, target)
-
+        # return img, target [bbox, loc mat mui mieng]
         return torch.from_numpy(img), target
 
 def detection_collate(batch):

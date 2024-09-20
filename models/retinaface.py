@@ -54,14 +54,14 @@ class RetinaFace(nn.Module):
         super(RetinaFace,self).__init__()
         self.phase = phase
         backbone = None
-        if cfg['name'] == 'mobilenet0.25':
+        if cfg['name'] == 'mobilenet0.25': #True
             backbone = MobileNetV1()
-            if cfg['pretrain']:
+            if cfg['pretrain']:#True
                 checkpoint = torch.load("./weights/mobilenetV1X0.25_pretrain.tar", map_location=torch.device('cpu'))
                 from collections import OrderedDict
                 new_state_dict = OrderedDict()
                 for k, v in checkpoint['state_dict'].items():
-                    name = k[7:]  # remove module.
+                    name = k[7:]  # remove "module." in k
                     new_state_dict[name] = v
                 # load params
                 backbone.load_state_dict(new_state_dict)
@@ -69,14 +69,14 @@ class RetinaFace(nn.Module):
             import torchvision.models as models
             backbone = models.resnet50(pretrained=cfg['pretrain'])
 
-        self.body = _utils.IntermediateLayerGetter(backbone, cfg['return_layers'])
-        in_channels_stage2 = cfg['in_channel']
+        self.body = _utils.IntermediateLayerGetter(backbone, cfg['return_layers']) #return_layers ={'stage1': 1, 'stage2': 2, 'stage3': 3},
+        in_channels_stage2 = cfg['in_channel'] #32
         in_channels_list = [
             in_channels_stage2 * 2,
             in_channels_stage2 * 4,
             in_channels_stage2 * 8,
         ]
-        out_channels = cfg['out_channel']
+        out_channels = cfg['out_channel'] #64
         self.fpn = FPN(in_channels_list,out_channels)
         self.ssh1 = SSH(out_channels, out_channels)
         self.ssh2 = SSH(out_channels, out_channels)

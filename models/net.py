@@ -38,7 +38,7 @@ def conv_dw(inp, oup, stride, leaky=0.1):
     )
 
 class SSH(nn.Module):
-    def __init__(self, in_channel, out_channel):
+    def __init__(self, in_channel, out_channel): #in = out =64 retinaface.py
         super(SSH, self).__init__()
         assert out_channel % 4 == 0
         leaky = 0
@@ -65,8 +65,8 @@ class SSH(nn.Module):
         out = F.relu(out)
         return out
 
-class FPN(nn.Module):
-    def __init__(self,in_channels_list,out_channels):
+class FPN(nn.Module): 
+    def __init__(self,in_channels_list,out_channels): # in = [64,128,256], out = 64
         super(FPN,self).__init__()
         leaky = 0
         if (out_channels <= 64):
