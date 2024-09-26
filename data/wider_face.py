@@ -15,9 +15,12 @@ class WiderFaceDetection(data.Dataset):
         lines = f.readlines()
         isFirst = True
         labels = []
+        indexx = 0
         for line in lines:
             line = line.rstrip()
             if line.startswith('#'):
+                indexx+=1
+                if(indexx%3==0): continue
                 if isFirst is True:
                     isFirst = False
                 else:
@@ -28,6 +31,7 @@ class WiderFaceDetection(data.Dataset):
                 path = txt_path.replace('label.txt','images/') + path
                 self.imgs_path.append(path)
             else:
+                if(indexx%3==0): continue
                 line = line.split(' ')
                 label = [float(x) for x in line]
                 labels.append(label)
@@ -53,7 +57,7 @@ class WiderFaceDetection(data.Dataset):
             annotation[0, 2] = label[0] + label[2]  # x2
             annotation[0, 3] = label[1] + label[3]  # y2
 
-            # landmarks
+            # landmarks mattrai, matphai, mui, miengtrai, miengphai
             annotation[0, 4] = label[4]    # l0_x
             annotation[0, 5] = label[5]    # l0_y
             annotation[0, 6] = label[7]    # l1_x

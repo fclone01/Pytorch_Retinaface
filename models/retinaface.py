@@ -12,6 +12,7 @@ from models.net import SSH as SSH
 
 
 class ClassHead(nn.Module):
+    # Bgr or face
     def __init__(self,inchannels=512,num_anchors=3):
         super(ClassHead,self).__init__()
         self.num_anchors = num_anchors
@@ -24,6 +25,7 @@ class ClassHead(nn.Module):
         return out.view(out.shape[0], -1, 2)
 
 class BboxHead(nn.Module):
+    #box face
     def __init__(self,inchannels=512,num_anchors=3):
         super(BboxHead,self).__init__()
         self.conv1x1 = nn.Conv2d(inchannels,num_anchors*4,kernel_size=(1,1),stride=1,padding=0)
@@ -35,6 +37,7 @@ class BboxHead(nn.Module):
         return out.view(out.shape[0], -1, 4)
 
 class LandmarkHead(nn.Module):
+    #5 point
     def __init__(self,inchannels=512,num_anchors=3):
         super(LandmarkHead,self).__init__()
         self.conv1x1 = nn.Conv2d(inchannels,num_anchors*10,kernel_size=(1,1),stride=1,padding=0)
@@ -105,11 +108,15 @@ class RetinaFace(nn.Module):
         return landmarkhead
 
     def forward(self,inputs):
+        # inputs: cv2.imread
         out = self.body(inputs)
+        #out 3 stage
 
         # FPN
         fpn = self.fpn(out)
-
+        """
+        3layer
+        """
         # SSH
         feature1 = self.ssh1(fpn[0])
         feature2 = self.ssh2(fpn[1])

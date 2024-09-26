@@ -28,7 +28,15 @@ class MultiBoxLoss(nn.Module):
             N: number of matched default boxes
         See: https://arxiv.org/pdf/1512.02325.pdf for more details.
     """
-
+    """
+    overlap_thresh:0.35.  2 box > overlap_thresh is 1 obj
+    prior_for_matching:  True, sử dụng khung ban đầu đễ thực hiện so khớp
+    bkg_label: 0
+    neg_mining: True
+    neg_pos = 7
+    neg_overlap = 0.35
+    encode_target = False
+    """
     def __init__(self, num_classes, overlap_thresh, prior_for_matching, bkg_label, neg_mining, neg_pos, neg_overlap, encode_target):
         super(MultiBoxLoss, self).__init__()
         self.num_classes = num_classes

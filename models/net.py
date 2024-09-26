@@ -37,7 +37,7 @@ def conv_dw(inp, oup, stride, leaky=0.1):
         nn.LeakyReLU(negative_slope= leaky,inplace=True),
     )
 
-class SSH(nn.Module):
+class SSH(nn.Module): # Single Stage Headless Face Detector
     def __init__(self, in_channel, out_channel): #in = out =64 retinaface.py
         super(SSH, self).__init__()
         assert out_channel % 4 == 0
@@ -65,7 +65,7 @@ class SSH(nn.Module):
         out = F.relu(out)
         return out
 
-class FPN(nn.Module): 
+class FPN(nn.Module): #Feature Pyramid Network
     def __init__(self,in_channels_list,out_channels): # in = [64,128,256], out = 64
         super(FPN,self).__init__()
         leaky = 0
