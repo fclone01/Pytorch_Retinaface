@@ -61,7 +61,8 @@ class MultiBoxLoss(nn.Module):
             ground_truth (tensor): Ground truth boxes and labels for a batch,
                 shape: [batch_size,num_objs,5] (last idx is the label).
         """
-
+        
+        # bbox_regressions , classifications, ldm_regressions
         loc_data, conf_data, landm_data = predictions
         priors = priors
         num = loc_data.size(0)
