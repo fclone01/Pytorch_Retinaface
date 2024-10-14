@@ -98,7 +98,7 @@ class FPN(nn.Module): #Feature Pyramid Network
         return out
 
 
-
+# https://github.com/Mayurji/Image-Classification-PyTorch/blob/main/MobileNetV1.py
 class MobileNetV1(nn.Module):
     def __init__(self):
         super(MobileNetV1, self).__init__()
